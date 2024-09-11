@@ -37,16 +37,16 @@ button {
 }
 
 .game-container {
-    display: flex; /* Abilita Flexbox */
-    flex-direction: column; /* Dispone gli elementi in colonna */
-    justify-content: center; /* Spaziatura uniforme tra gli elementi */
-    align-items: center; /* Allinea orizzontalmente al centro */
-    flex: 1; /* Occupa tutto lo spazio disponibile */
-    overflow-y: hidden; /* Scorrimento verticale se necessario */
+    display: flex; 
+    flex-direction: column; 
+    justify-content: center; 
+    align-items: center; 
+    flex: 1; 
+    overflow-y: hidden; 
 }
 
 .game-container > * {
-    margin: 30px auto;; /* Aggiunge margini auto per spaziatura uniforme */
+    margin: 30px auto;
 }
   
 .foot {

@@ -6,7 +6,6 @@ const Gameboard = (() => {
     const renderSquares = () => {
 
         let boardHTML = ""
-        let turn = "X"
         gameboard.forEach((square, i) => {
             boardHTML += `<div class="square align" id=square-${i}>${square}</div>`
         })
@@ -105,7 +104,6 @@ const createPlayer = (name, symbol) => {
 }
 
 
-
 const Game = (() => {
     let players = [];
     let currPlayerIndex;
@@ -124,20 +122,22 @@ const Game = (() => {
         }
     }
     const restart = () => {
-        isSessionActive = true
-        for (let i = 0; i < 9; i++){
-            Gameboard.update(i,"");
+        if(isSessionActive === true){
+            for (let i = 0; i < 9; i++){
+                Gameboard.update(i,"");
+            }
+
+            document.querySelector(".turn-bg").style.left = "0"
+            messageDiv.style.color = '#011627'
+            players = [
+                createPlayer(document.querySelector('#player-1').value, "X"),
+                createPlayer(document.querySelector('#player-2').value, "O")
+            ];
+            currPlayerIndex = 0;
+            isGameOver = false;
+            Gameboard.renderSquares()
+
         }
-        Gameboard.renderSquares()
-        isGameOver = false;
-        // displayController.printMessage(messageDiv, "")
-        document.querySelector(".turn-bg").style.left = "0"
-        messageDiv.style.color = '#011627'
-        players = [
-            createPlayer(document.querySelector('#player-1').value, "X"),
-            createPlayer(document.querySelector('#player-2').value, "O")
-        ];
-        // messageDiv.innerText = "Hidden Message"
     }
 
     const handleClick = (event) => {
@@ -152,16 +152,7 @@ const Game = (() => {
 
             checkForWin = Gameboard.checkSquares();
             checkForTie = Gameboard.checkTie();
-            // let adjustedNames = Gameboard.checkPlayerName(players[currPlayerIndex].name, players[currPlayerIndex].symbol);
-            // if (players[currPlayerIndex].name !== "Player X" || players[currPlayerIndex].name !== "Player O"){
-            //        players[currPlayerIndex].name = adjustedNames.name;
-            //     }
-            // else if(players[currPlayerIndex].name === "" && symbol === "X"){
-            //     players[currPlayerIndex].name = "Player X"
-            // }
-            // else if(players[currPlayerIndex].name === "" && symbol === "O"){
-            //     players[currPlayerIndex].name= "Player O"
-            // }
+
 
             if (checkForWin == true){
                 Gameboard.update(squareIndex, players[currPlayerIndex].symbol)
@@ -175,14 +166,12 @@ const Game = (() => {
                 displayController.printMessage(messageDiv, `It's a tie !`)
                 isGameOver = true
             }
-
-            currPlayerIndex = currPlayerIndex === 0 ? 1 : 0;
-            Gameboard.changeSymbol(currPlayerIndex)
-
+            else{
+                currPlayerIndex = currPlayerIndex === 0 ? 1 : 0;
+                Gameboard.changeSymbol(currPlayerIndex)
+            }
         }
 
-
-        // return console.log(squareIndex)
     }
 
     return { start, restart, handleClick, }
@@ -213,6 +202,3 @@ restartBtn.addEventListener('click', () => {
 })
 
 const messageDiv = document.querySelector('#message');
-
-
-
